@@ -1,0 +1,49 @@
+/**
+ * 
+ */
+package com.flowers.serviceimpl;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+
+import com.flowers.bean.User;
+import com.flowers.service.IUserService;
+
+/**
+ * @author Suresh Karnati
+ * UserService.java
+ * v1.0
+ *
+ */
+public class UserServiceImpl implements IUserService{
+	
+	private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+
+	@Override
+	public List<User> readJSONFeed(ResponseEntity<List<User>> response) {
+		LOGGER.info("inside @readJSONFeed()");
+		
+		List<User> userList = response.getBody();		
+		return userList;	
+	}
+
+	@Override
+	public List<User> getUniqueUsers(ResponseEntity<List<User>> response) {
+		
+		List<User> userList = response.getBody();		
+		List<User> distinctUserIds = userList.stream().distinct().collect(Collectors.toList());
+		return distinctUserIds;
+	}
+
+	@Override
+	public int getEndPointSize(ResponseEntity<List<User>> response) {
+		List<User> userList = response.getBody();
+		
+		return userList.size();
+	}
+
+}

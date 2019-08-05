@@ -1,0 +1,56 @@
+/**
+ * 
+ */
+package com.flowers.controller;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.flowers.bean.User;
+
+/**
+ * @author Suresh Karnati
+ *
+ */
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+	
+	private final String JSONURI = "http://jsonplaceholder.typicode.com/posts";
+	
+	@GetMapping("/readJSON")
+	@ResponseBody
+	public List<User> readJSON() {
+		
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<List<User>> response = restTemplate.exchange(JSONURI, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>(){});
+		List<User> userList = response.getBody();
+		
+		return userList;
+	}
+	
+	@GetMapping("/getuniqueusers")
+	@ResponseBody
+	public Set<User> getUniqueUsers() {
+		
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<List<User>> response = restTemplate.exchange(JSONURI, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>(){});
+		List<User> userList = response.getBody();
+		
+		 Set<User> distinctElements = new HashSet<User>(userList);
+
+		return distinctElements;
+	}
+
+}

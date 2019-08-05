@@ -1,0 +1,71 @@
+/**
+ * 
+ */
+package com.flowers.serviceimpl;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.flowers.bean.User;
+import com.flowers.service.IUserService;
+
+/**
+ * @author Suresh Karnati
+ * UserService.java
+ * v1.0
+ *
+ */
+@Service
+public class UserServiceImpl implements IUserService{
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+	
+	@Autowired
+	private User user;
+
+	@Override
+	public List<User> readJSONFeed(ResponseEntity<List<User>> response) {
+		LOGGER.info("inside @readJSONFeed()");
+		
+		List<User> userList = response.getBody();	
+		
+		if(userList.size() == 0) {
+			User user = new User();
+			user.setMessageBody("No data found from the Feed");			
+		}
+		
+		return userList;	
+	}
+
+	@Override
+	public List<User> getUniqueUsers(ResponseEntity<List<User>> response) {
+		
+		List<User> userList = response.getBody();		
+		List<User> distinctUserIds = userList.stream().distinct().collect(Collectors.toList());
+		
+		for (User uniqueuserId : distinctUserIds) {
+			
+			if(uniqueuserId.equals(distinctUserIds.get(3))) {
+				user.setTitle("1800flowers");
+				user.setMessageBody("1800flowers");
+				
+			}
+			
+		}
+		distinctUserIds.add(user);
+		return distinctUserIds;
+	}
+
+	@Override
+	public int getEndPointSize(ResponseEntity<List<User>> response) {
+		List<User> userList = response.getBody();	
+		return userList.size();
+	}
+
+}

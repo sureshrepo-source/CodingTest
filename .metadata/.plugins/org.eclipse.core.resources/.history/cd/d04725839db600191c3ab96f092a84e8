@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.flowers.bean;
+
+/**
+ * @author Admin
+ *
+ */
+public class UserResponse {
+
+}

@@ -1,0 +1,30 @@
+/**
+ * 
+ */
+package com.flowers.bean;
+
+/**
+ * @author Admin
+ *
+ */
+public class UserResponse {
+	
+	private String endPointSize;
+
+	/**
+	 * @return the endPointSize
+	 */
+	public String getEndPointSize() {
+		return endPointSize;
+	}
+
+	/**
+	 * @param endPointSize the endPointSize to set
+	 */
+	public void setEndPointSize(String endPointSize) {
+		this.endPointSize = endPointSize;
+	}
+	
+	
+
+}

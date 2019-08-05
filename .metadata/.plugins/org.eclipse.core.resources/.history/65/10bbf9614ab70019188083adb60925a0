@@ -1,0 +1,15 @@
+package com.example.demo.response;
+
+public class UsersResponse {
+	private int totalUsers;
+
+	public int getTotalUsers() {
+		return totalUsers;
+	}
+
+	public void setTotalUsers(int totalUsers) {
+		this.totalUsers = totalUsers;
+	}
+	
+
+}

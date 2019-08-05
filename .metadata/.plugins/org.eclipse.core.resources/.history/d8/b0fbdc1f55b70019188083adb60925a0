@@ -1,0 +1,139 @@
+/**
+ * 
+ */
+package com.flowers.controller;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.flowers.bean.User;
+import com.flowers.bean.UsersResponse;
+import com.flowers.serviceimpl.UserServiceImpl;
+
+/**
+ * @author Suresh Karnati
+ * UserController.java
+ * v1.0
+ * 
+ */
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+	
+	private final String JSONURI = "http://jsonplaceholder.typicode.com/posts";
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+	
+	@Autowired
+	private UserServiceImpl userServiceImpl;
+	
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	/**
+	 * Reading the JSON data from JSONURI and
+	 * returning the JSON response
+	 * @return
+	 */
+	@GetMapping("/readJSONFeed")
+	@ResponseBody
+	public List<User> readJSON() {
+		LOGGER.info("inside UserController@readJSON");
+		ResponseEntity<List<User>> response = restTemplate.exchange(JSONURI, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>(){});
+		
+		return userServiceImpl.readJSONFeed(response);
+		
+	}
+	
+	/**
+	 * Returns the size of the JSON Feed with all users
+	 * @return
+	 */
+	@GetMapping("/getAllUsersSize")
+	@ResponseBody
+	public Integer getEndPointSize() {
+		LOGGER.info("inside UserController@getEndPointSize");
+		ResponseEntity<List<User>> response = restTemplate.exchange(JSONURI, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>(){});
+		
+		return userServiceImpl.getEndPointSize(response);
+
+	}
+	
+	/**
+	 * Returns size of  unique Users from the JSON Feed
+	 */
+	@GetMapping("/getUniqueUsersSize")
+	@ResponseBody
+	public UsersResponse getSize() {
+		LOGGER.info("inside UserController@getSize");
+		ResponseEntity<List<User>> response = restTemplate.exchange(JSONURI, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {});
+		List<User> userList = response.getBody();
+		Set<User> userset = new HashSet<User>();
+		userset.addAll(userList);
+		UsersResponse totalUserResponse = new UsersResponse();
+		totalUserResponse.setTotalUsers(userset.size());
+		return totalUserResponse;
+	}
+	
+	@GetMapping("/getuniqueusers")
+	@ResponseBody
+	public List<User> getUniqueUsers() {
+		LOGGER.info("inside UserController@getUniqueUsers");
+		ResponseEntity<List<User>> response = restTemplate.exchange(JSONURI, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>(){});
+		
+		return userServiceImpl.getUniqueUsers(response);
+		 
+	}
+	
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@GetMapping("/update")
+	@ResponseBody
+	public List<User> modify() {
+		LOGGER.info("inside UserController@modify");
+		ResponseEntity<List<User>> response = restTemplate.exchange(JSONURI, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>(){});
+		
+		return userServiceImpl.update(response);
+		 
+	}
+	
+	/**
+	 * Returns Updated fourth Array Object of User from the JSONPlaceHolder
+	 * @return
+	 */
+	@GetMapping("/updateuser")
+	@ResponseBody
+    public List<User> updateUser() {
+		LOGGER.info("inside UserController@updateUser");
+		 ResponseEntity<List<User>> response = restTemplate.exchange(JSONURI, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {});
+		  List<User> userList = response.getBody();
+		  // Index Start with 0 so for the fourth object get the index 3 
+		  User user= userList.get(3);
+		  user.setTitle("1800Flowers");
+		  user.setBody("1800Flowers");
+		  userList.set(3,user);
+		  
+        return userList;
+    }
+	
+	
+
+}

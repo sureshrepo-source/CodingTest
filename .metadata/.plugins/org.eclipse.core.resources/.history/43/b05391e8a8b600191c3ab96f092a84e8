@@ -1,0 +1,37 @@
+/**
+ * 
+ */
+package com.flowers.serviceimpl;
+
+import java.util.List;
+
+import com.flowers.bean.User;
+import com.flowers.service.IUserService;
+
+/**
+ * @author Suresh Karnati
+ * UserService.java
+ * v1.0
+ *
+ */
+public class UserServiceImpl implements IUserService{
+
+	@Override
+	public List<User> readJSONFeed() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<User> getUniqueUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getEndPointSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

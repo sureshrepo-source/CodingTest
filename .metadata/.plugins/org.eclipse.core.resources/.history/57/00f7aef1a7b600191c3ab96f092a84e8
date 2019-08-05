@@ -1,0 +1,14 @@
+/**
+ * 
+ */
+package com.flowers.service;
+
+/**
+ * @author Suresh Karnati
+ * IUserService.java
+ * v1.0
+ *
+ */
+public interface IUserService {
+
+}

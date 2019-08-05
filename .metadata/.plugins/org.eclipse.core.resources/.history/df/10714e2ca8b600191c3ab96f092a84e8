@@ -1,0 +1,16 @@
+/**
+ * 
+ */
+package com.flowers.serviceimpl;
+
+import com.flowers.service.IUserService;
+
+/**
+ * @author Suresh Karnati
+ * UserService.java
+ * v1.0
+ *
+ */
+public class UserServiceImpl implements IUserService{
+
+}
